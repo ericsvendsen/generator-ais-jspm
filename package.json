@@ -1,0 +1,22 @@
+{
+  "name": "generator-ais-jspm",
+  "version": "0.1.0",
+  "description": "Generates a project using JSPM for dependency management and System.js for module loading.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericsvendsen/generator-ais-jspm.git"
+  },
+  "author": "Eric Svendsen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ericsvendsen/generator-ais-jspm/issues"
+  },
+  "homepage": "https://github.com/ericsvendsen/generator-ais-jspm#readme",
+  "dependencies": {
+    "yeoman-generator": "^0.22.5"
+  }
+}

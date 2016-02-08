@@ -1,0 +1,16 @@
+# Dependency directories
+node_modules
+app/jspm_packages
+
+#Editor files
+.idea
+
+# Build directory
+build
+
+# Deploy directory
+deploy
+
+#Misc
+bin
+.DS_Store

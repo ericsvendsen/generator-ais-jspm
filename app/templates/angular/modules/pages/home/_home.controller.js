@@ -4,5 +4,7 @@ function initialize () {
 }
 
 export default function HomeController () {
+    let self = this;
+
     initialize();
 }

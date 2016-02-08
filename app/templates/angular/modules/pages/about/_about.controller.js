@@ -4,5 +4,7 @@ function initialize () {
 }
 
 export default function AboutController () {
+    let self = this;
+
     initialize();
 }

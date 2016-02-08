@@ -6,7 +6,9 @@ function initialize () {
 }
 
 export default function FooterController () {
-    this.copyright = '&copy; ' + moment().year();
+    let self = this;
+
+    self.copyright = '&copy; ' + moment().year();
 
     initialize();
 }

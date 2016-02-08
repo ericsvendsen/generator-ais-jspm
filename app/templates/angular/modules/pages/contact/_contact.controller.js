@@ -4,5 +4,7 @@ function initialize () {
 }
 
 export default function ContactController () {
+    let self = this;
+
     initialize();
 }

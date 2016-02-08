@@ -4,7 +4,9 @@ function initialize () {
 }
 
 export default function NavigationController () {
-    this.brand = 'My App';
+    let self = this;
+
+    self.brand = 'My App';
 
     initialize();
 }

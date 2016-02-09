@@ -113,6 +113,17 @@ module.exports = generators.Base.extend({
             this.copy('angular/modules/pages/about/_about.template.html', 'app/modules/pages/about/about.template.html');
             this.copy('angular/modules/pages/contact/_contact.template.html', 'app/modules/pages/contact/contact.template.html');
             this.copy('angular/modules/pages/home/_home.template.html', 'app/modules/pages/home/home.template.html');
+            this.copy('angular/modules/components/footer/_footer.controller.js', 'app/modules/components/footer/footer.controller.js');
+            this.copy('angular/modules/components/footer/_footer.directive.js', 'app/modules/components/footer/footer.directive.js');
+            this.copy('angular/modules/components/header/_header.controller.js', 'app/modules/components/header/header.controller.js');
+            this.copy('angular/modules/components/header/_header.directive.js', 'app/modules/components/header/header.directive.js');
+            this.copy('angular/modules/components/navigation/_navigation.controller.js', 'app/modules/components/navigation/navigation.controller.js');
+            this.copy('angular/modules/components/navigation/_navigation.directive.js', 'app/modules/components/navigation/navigation.directive.js');
+            this.copy('angular/modules/pages/about/_about.controller.js', 'app/modules/pages/about/about.controller.js');
+            this.copy('angular/modules/pages/contact/_contact.controller.js', 'app/modules/pages/contact/contact.controller.js');
+            this.copy('angular/modules/pages/home/_home.controller.js', 'app/modules/pages/home/home.controller.js');
+            this.copy('angular/modules/models/_Person.js', 'app/modules/models/Person.js');
+            this.copy('angular/modules/services/_app.service.js', 'app/modules/services/app.service.js');
         },
 
         scripts: function () {
@@ -131,48 +142,6 @@ module.exports = generators.Base.extend({
                 }
             );
             this.fs.copyTpl(
-                this.templatePath('angular/modules/components/footer/_footer.controller.js'),
-                this.destinationPath('app/modules/components/footer/footer.controller.js'),
-                {
-                    ngapp: 'myApp'
-                }
-            );
-            this.fs.copyTpl(
-                this.templatePath('angular/modules/components/footer/_footer.directive.js'),
-                this.destinationPath('app/modules/components/footer/footer.directive.js'),
-                {
-                    ngapp: 'myApp'
-                }
-            );
-            this.fs.copyTpl(
-                this.templatePath('angular/modules/components/header/_header.directive.js'),
-                this.destinationPath('app/modules/components/header/header.directive.js'),
-                {
-                    ngapp: 'myApp'
-                }
-            );
-            this.fs.copyTpl(
-                this.templatePath('angular/modules/components/header/_header.controller.js'),
-                this.destinationPath('app/modules/components/header/header.controller.js'),
-                {
-                    ngapp: 'myApp'
-                }
-            );
-            this.fs.copyTpl(
-                this.templatePath('angular/modules/components/navigation/_navigation.controller.js'),
-                this.destinationPath('app/modules/components/navigation/navigation.controller.js'),
-                {
-                    ngapp: 'myApp'
-                }
-            );
-            this.fs.copyTpl(
-                this.templatePath('angular/modules/components/navigation/_navigation.directive.js'),
-                this.destinationPath('app/modules/components/navigation/navigation.directive.js'),
-                {
-                    ngapp: 'myApp'
-                }
-            );
-            this.fs.copyTpl(
                 this.templatePath('angular/modules/components/_index.js'),
                 this.destinationPath('app/modules/components/index.js'),
                 {
@@ -180,29 +149,22 @@ module.exports = generators.Base.extend({
                 }
             );
             this.fs.copyTpl(
-                this.templatePath('angular/modules/pages/about/_about.controller.js'),
-                this.destinationPath('app/modules/pages/about/about.controller.js'),
-                {
-                    ngapp: 'myApp'
-                }
-            );
-            this.fs.copyTpl(
-                this.templatePath('angular/modules/pages/contact/_contact.controller.js'),
-                this.destinationPath('app/modules/pages/contact/contact.controller.js'),
-                {
-                    ngapp: 'myApp'
-                }
-            );
-            this.fs.copyTpl(
-                this.templatePath('angular/modules/pages/home/_home.controller.js'),
-                this.destinationPath('app/modules/pages/home/home.controller.js'),
-                {
-                    ngapp: 'myApp'
-                }
-            );
-            this.fs.copyTpl(
                 this.templatePath('angular/modules/pages/_index.js'),
                 this.destinationPath('app/modules/pages/index.js'),
+                {
+                    ngapp: 'myApp'
+                }
+            );
+            this.fs.copyTpl(
+                this.templatePath('angular/modules/models/_index.js'),
+                this.destinationPath('app/modules/models/index.js'),
+                {
+                    ngapp: 'myApp'
+                }
+            );
+            this.fs.copyTpl(
+                this.templatePath('angular/modules/services/_index.js'),
+                this.destinationPath('app/modules/services/index.js'),
                 {
                     ngapp: 'myApp'
                 }

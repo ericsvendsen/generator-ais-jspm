@@ -1,16 +1,19 @@
-(function () {
-    'use strict';
+export default class appService {
+    constructor () {
 
-    angular.module('<%=ngapp%>').service('appService', appService);
-
-    function appService () {
-        return {
-            method1: function () {
-                return {};
-            },
-            method2: function () {
-                return {};
-            }
-        };
     }
-})();
+
+    getPeople () {
+        let people = [
+            {
+                name: 'Bob Smith',
+                title: 'President'
+            },
+            {
+                name: 'Jane Doe',
+                title: 'CEO'
+            }
+        ];
+        return Promise.resolve(people);
+    }
+}

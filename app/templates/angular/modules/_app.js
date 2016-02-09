@@ -6,6 +6,8 @@ import ngRoute from 'angular-route';
 
 import appComponents from './components/index.js';
 import appPages from './pages/index.js';
+import appModels from './models/index.js';
+import appServices from './services/index.js';
 
 var app = angular.module('<%=ngapp%>', [
     'ngCookies',
@@ -13,21 +15,26 @@ var app = angular.module('<%=ngapp%>', [
     'ngSanitize',
     'ngRoute',
     'appComponents',
-    'appPages'
+    'appPages',
+    'appModels',
+    'appServices'
 ]);
 
 app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {
                 controller: 'homeController',
+                controllerAs: 'vm',
                 templateUrl: 'modules/pages/home/home.template.html'
             })
             .when('/about', {
                 controller: 'aboutController',
+                controllerAs: 'vm',
                 templateUrl: 'modules/pages/about/about.template.html'
             })
             .when('/contact', {
                 controller: 'contactController',
+                controllerAs: 'vm',
                 templateUrl: 'modules/pages/contact/contact.template.html'
             })
             .otherwise({

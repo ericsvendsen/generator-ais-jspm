@@ -4,6 +4,11 @@
     <div class="col-xs-12">
         <h2>About</h2>
         <p>Here's some information about this app.</p>
+        <ul>
+            <li ng-repeat="person in vm.people">
+                <b>{{ person.name }}</b>: {{ person.title }}
+            </li>
+        </ul>
     </div>
 </div>
 <app-footer></app-footer>

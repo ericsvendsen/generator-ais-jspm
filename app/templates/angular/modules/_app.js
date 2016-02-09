@@ -9,6 +9,8 @@ import appPages from './pages/index.js';
 import appModels from './models/index.js';
 import appServices from './services/index.js';
 
+import './app.scss!';
+
 var app = angular.module('<%=ngapp%>', [
     'ngCookies',
     'ngResource',

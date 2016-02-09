@@ -59,14 +59,11 @@ module.exports = generators.Base.extend({
             packageJSON.devDependencies['browser-sync'] = '^2.11.1';
             packageJSON.devDependencies['del'] = '^2.2.0';
             packageJSON.devDependencies['gulp'] = '^3.9.0';
-            packageJSON.devDependencies['gulp-concat'] = '^2.6.0';
-            packageJSON.devDependencies['gulp-cssnano'] = '^2.1.0';
             packageJSON.devDependencies['gulp-jshint'] = '^2.0.0';
-            packageJSON.devDependencies['gulp-less'] = '^3.0.5';
+            packageJSON.devDependencies['gulp-jspm'] = '^0.5.6';
             packageJSON.devDependencies['gulp-ng-annotate'] = '^1.1.0';
             packageJSON.devDependencies['gulp-ng-config'] = '^1.2.1';
             packageJSON.devDependencies['gulp-sourcemaps'] = '^1.6.0';
-            packageJSON.devDependencies['gulp-uglify'] = '^1.5.1';
             packageJSON.devDependencies['jasmine-core'] = '^2.4.1';
             packageJSON.devDependencies['jshint'] = '^2.9.1';
             packageJSON.devDependencies['jshint-stylish'] = '^2.1.0';
@@ -88,10 +85,11 @@ module.exports = generators.Base.extend({
 
 
             // general client dependencies
-            packageJSON.jspm.dependencies['bootstrap'] = 'github:twbs/bootstrap@^3.3.6';
+            packageJSON.jspm.dependencies['bootstrap-sass'] = 'github:twbs/bootstrap-sass@^3.3.6';
             packageJSON.jspm.dependencies['font-awesome'] = 'npm:font-awesome@^4.5.0';
             packageJSON.jspm.dependencies['lodash'] = 'npm:lodash@^4.2.1';
             packageJSON.jspm.dependencies['moment'] = 'npm:moment@^2.11.2';
+            packageJSON.jspm.dependencies['scss'] = 'github:mobilexag/plugin-sass@^0.2.1';
 
             // jspm core dependencies
             packageJSON.jspm.devDependencies['babel'] = 'npm:babel-core@^5.8.24';
@@ -106,7 +104,7 @@ module.exports = generators.Base.extend({
         },
 
         appStaticFiles: function () {
-            this.directory('less', 'app/less');
+            this.copy('angular/modules/_app.scss', 'app/modules/app.scss');
             this.copy('angular/modules/components/footer/_footer.template.html', 'app/modules/components/footer/footer.template.html');
             this.copy('angular/modules/components/header/_header.template.html', 'app/modules/components/header/header.template.html');
             this.copy('angular/modules/components/navigation/_navigation.template.html', 'app/modules/components/navigation/navigation.template.html');

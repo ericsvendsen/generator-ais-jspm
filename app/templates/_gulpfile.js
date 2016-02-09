@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
     del = require('del'),
-    browserSync = require('browser-sync').create();
+    browserSync = require('browser-sync').create(),
+    gulp_jspm = require('gulp-jspm'),
+    sourcemaps = require('gulp-sourcemaps');
 
 // clean
 gulp.task('clean', function () {
@@ -9,23 +11,33 @@ gulp.task('clean', function () {
     ]);
 });
 
-gulp.task('copy', ['clean'], function () {
-    return gulp.src('./app/**/*')
+gulp.task('html', ['clean'], function () {
+    return gulp.src('./app/modules/**/*.html')
+        .pipe(gulp.dest('./build/modules'));
+});
+
+gulp.task('bundle-build', ['html'], function () {
+    return gulp.src('./app/modules/app.js')
+        .pipe(sourcemaps.init())
+        .pipe(sourcemaps.write())
+        .pipe(gulp_jspm({selfExecutingBundle: true}))
         .pipe(gulp.dest('./build'));
 });
 
-
-gulp.task('js-watch', ['copy'], browserSync.reload);
+gulp.task('watch', ['bundle-build'], browserSync.reload);
 
 // Static server
-gulp.task('browser-sync', ['copy'], function () {
+gulp.task('browser-sync', ['bundle-build'], function () {
     browserSync.init({
         server: {
             baseDir: './build'
         }
     });
 
-    gulp.watch("app/modules/**/*.js", ['js-watch']);
+    gulp.watch('./app/modules/**/*', ['watch']);
 });
 
-gulp.task('default', ['browser-sync']);
+gulp.task('default', ['browser-sync'], function () {
+    return gulp.src('./app/index.html')
+        .pipe(gulp.dest('./build'));
+});

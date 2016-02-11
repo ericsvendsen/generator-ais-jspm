@@ -1,8 +1,6 @@
 import angular from 'angular';
-import ngCookies from 'angular-cookies';
-import ngResource from 'angular-resource';
-import ngSanitize from 'angular-sanitize';
 import ngRoute from 'angular-route';
+import ngSanitize from 'angular-sanitize';
 
 import appComponents from './components/index.js';
 import appPages from './pages/index.js';
@@ -11,11 +9,9 @@ import appServices from './services/index.js';
 
 import './app.scss!';
 
-var app = angular.module('<%=ngapp%>', [
-    'ngCookies',
-    'ngResource',
-    'ngSanitize',
+let app = angular.module('<%=ngapp%>', [
     'ngRoute',
+    'ngSanitize',
     'appComponents',
     'appPages',
     'appModels',
@@ -27,17 +23,17 @@ app.config(['$routeProvider', function ($routeProvider) {
             .when('/', {
                 controller: 'homeController',
                 controllerAs: 'vm',
-                templateUrl: 'modules/pages/home/home.template.html'
+                templateUrl: 'pages/home/home.template.html'
             })
             .when('/about', {
                 controller: 'aboutController',
                 controllerAs: 'vm',
-                templateUrl: 'modules/pages/about/about.template.html'
+                templateUrl: 'pages/about/about.template.html'
             })
             .when('/contact', {
                 controller: 'contactController',
                 controllerAs: 'vm',
-                templateUrl: 'modules/pages/contact/contact.template.html'
+                templateUrl: 'pages/contact/contact.template.html'
             })
             .otherwise({
                 redirectTo: '/'

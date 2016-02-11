@@ -6,3 +6,6 @@ Generates a project using JSPM for dependency management and System.js for modul
 * mkdir myApp
 * cd myApp
 * yo ais-jspm
+* npm install
+* jspm install
+* gulp

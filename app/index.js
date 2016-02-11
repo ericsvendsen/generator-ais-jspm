@@ -41,7 +41,7 @@ module.exports = generators.Base.extend({
                 devDependencies: {},
                 jspm: {
                     directories: {
-                        baseURL: './'
+                        baseURL: 'src'
                     },
                     dependencies: {},
                     devDependencies: {}
@@ -102,65 +102,65 @@ module.exports = generators.Base.extend({
         },
 
         appStaticFiles: function () {
-            this.copy('angular/_app.scss', 'app/app.scss');
-            this.copy('angular/components/footer/_footer.template.html', 'app/components/footer/footer.template.html');
-            this.copy('angular/components/header/_header.template.html', 'app/components/header/header.template.html');
-            this.copy('angular/components/navigation/_navigation.template.html', 'app/components/navigation/navigation.template.html');
-            this.copy('angular/pages/about/_about.template.html', 'app/pages/about/about.template.html');
-            this.copy('angular/pages/contact/_contact.template.html', 'app/pages/contact/contact.template.html');
-            this.copy('angular/pages/home/_home.template.html', 'app/pages/home/home.template.html');
-            this.copy('angular/components/footer/_footer.controller.js', 'app/components/footer/footer.controller.js');
-            this.copy('angular/components/footer/_footer.directive.js', 'app/components/footer/footer.directive.js');
-            this.copy('angular/components/header/_header.controller.js', 'app/components/header/header.controller.js');
-            this.copy('angular/components/header/_header.directive.js', 'app/components/header/header.directive.js');
-            this.copy('angular/components/navigation/_navigation.controller.js', 'app/components/navigation/navigation.controller.js');
-            this.copy('angular/components/navigation/_navigation.directive.js', 'app/components/navigation/navigation.directive.js');
-            this.copy('angular/pages/about/_about.controller.js', 'app/pages/about/about.controller.js');
-            this.copy('angular/pages/contact/_contact.controller.js', 'app/pages/contact/contact.controller.js');
-            this.copy('angular/pages/home/_home.controller.js', 'app/pages/home/home.controller.js');
-            this.copy('angular/models/_Person.js', 'app/models/Person.js');
-            this.copy('angular/services/_app.service.js', 'app/services/app.service.js');
+            this.copy('angular/src/app/_app.scss', 'src/app/app.scss');
+            this.copy('angular/src/app/components/footer/_footer.template.html', 'src/app/components/footer/footer.template.html');
+            this.copy('angular/src/app/components/header/_header.template.html', 'src/app/components/header/header.template.html');
+            this.copy('angular/src/app/components/navigation/_navigation.template.html', 'src/app/components/navigation/navigation.template.html');
+            this.copy('angular/src/app/pages/about/_about.template.html', 'src/app/pages/about/about.template.html');
+            this.copy('angular/src/app/pages/contact/_contact.template.html', 'src/app/pages/contact/contact.template.html');
+            this.copy('angular/src/app/pages/home/_home.template.html', 'src/app/pages/home/home.template.html');
+            this.copy('angular/src/app/components/footer/_footer.controller.js', 'src/app/components/footer/footer.controller.js');
+            this.copy('angular/src/app/components/footer/_footer.directive.js', 'src/app/components/footer/footer.directive.js');
+            this.copy('angular/src/app/components/header/_header.controller.js', 'src/app/components/header/header.controller.js');
+            this.copy('angular/src/app/components/header/_header.directive.js', 'src/app/components/header/header.directive.js');
+            this.copy('angular/src/app/components/navigation/_navigation.controller.js', 'src/app/components/navigation/navigation.controller.js');
+            this.copy('angular/src/app/components/navigation/_navigation.directive.js', 'src/app/components/navigation/navigation.directive.js');
+            this.copy('angular/src/app/pages/about/_about.controller.js', 'src/app/pages/about/about.controller.js');
+            this.copy('angular/src/app/pages/contact/_contact.controller.js', 'src/app/pages/contact/contact.controller.js');
+            this.copy('angular/src/app/pages/home/_home.controller.js', 'src/app/pages/home/home.controller.js');
+            this.copy('angular/src/app/models/_Person.js', 'src/app/models/Person.js');
+            this.copy('angular/src/app/services/_app.service.js', 'src/app/services/app.service.js');
         },
 
         scripts: function () {
             this.fs.copyTpl(
-                this.templatePath('angular/_app.js'),
-                this.destinationPath('app/app.js'),
+                this.templatePath('angular/src/app/_app.js'),
+                this.destinationPath('src/app/app.js'),
                 {
                     ngapp: 'myApp'
                 }
             );
             this.fs.copyTpl(
-                this.templatePath('angular/_app.config.js'),
-                this.destinationPath('app/app.config.js'),
+                this.templatePath('angular/src/app/_app.config.js'),
+                this.destinationPath('src/app/app.config.js'),
                 {
                     ngapp: 'myApp'
                 }
             );
             this.fs.copyTpl(
-                this.templatePath('angular/components/_index.js'),
-                this.destinationPath('app/components/index.js'),
+                this.templatePath('angular/src/app/components/_index.js'),
+                this.destinationPath('src/app/components/index.js'),
                 {
                     ngapp: 'myApp'
                 }
             );
             this.fs.copyTpl(
-                this.templatePath('angular/pages/_index.js'),
-                this.destinationPath('app/pages/index.js'),
+                this.templatePath('angular/src/app/pages/_index.js'),
+                this.destinationPath('src/app/pages/index.js'),
                 {
                     ngapp: 'myApp'
                 }
             );
             this.fs.copyTpl(
-                this.templatePath('angular/models/_index.js'),
-                this.destinationPath('app/models/index.js'),
+                this.templatePath('angular/src/app/models/_index.js'),
+                this.destinationPath('src/app/models/index.js'),
                 {
                     ngapp: 'myApp'
                 }
             );
             this.fs.copyTpl(
-                this.templatePath('angular/services/_index.js'),
-                this.destinationPath('app/services/index.js'),
+                this.templatePath('angular/src/app/services/_index.js'),
+                this.destinationPath('src/app/services/index.js'),
                 {
                     ngapp: 'myApp'
                 }
@@ -169,8 +169,8 @@ module.exports = generators.Base.extend({
 
         html: function () {
             this.fs.copyTpl(
-                this.templatePath('angular/_index.html'),
-                this.destinationPath('app/index.html'),
+                this.templatePath('angular/src/_index.html'),
+                this.destinationPath('src/index.html'),
                 {
                     appname: 'My App',
                     ngapp: 'myApp'

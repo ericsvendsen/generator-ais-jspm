@@ -23,17 +23,17 @@ app.config(['$routeProvider', function ($routeProvider) {
             .when('/', {
                 controller: 'homeController',
                 controllerAs: 'vm',
-                templateUrl: 'pages/home/home.template.html'
+                templateUrl: './app/pages/home/home.template.html'
             })
             .when('/about', {
                 controller: 'aboutController',
                 controllerAs: 'vm',
-                templateUrl: 'pages/about/about.template.html'
+                templateUrl: './app/pages/about/about.template.html'
             })
             .when('/contact', {
                 controller: 'contactController',
                 controllerAs: 'vm',
-                templateUrl: 'pages/contact/contact.template.html'
+                templateUrl: './app/pages/contact/contact.template.html'
             })
             .otherwise({
                 redirectTo: '/'

@@ -14,13 +14,13 @@ gulp.task('clean', function () {
 
 // html
 gulp.task('html', ['clean'], function () {
-    return gulp.src('./app/**/*.html')
+    return gulp.src('./src/**/*.html')
         .pipe(gulp.dest('./build'));
 });
 
 // vendor
 gulp.task('bundle-vendor', ['html'], function (cb) {
-    return exec('jspm bundle \'app/app - [app/**/*]\' vendor.bundle.js -i --skip-source-maps', function (err, stdout, stderr) {
+    return exec('jspm bundle \'app/app - [app/**/*]\' src/vendor.bundle.js -i --skip-source-maps', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
@@ -38,7 +38,7 @@ gulp.task('bundle-vendor', ['html'], function (cb) {
 
 // app
 gulp.task('bundle-app', ['bundle-vendor'], function (cb) {
-    return exec('jspm bundle \'app/app - vendor.bundle.js\' app.bundle.js -i --skip-source-maps', function (err, stdout, stderr) {
+    return exec('jspm bundle \'app/app - vendor.bundle.js\' src/app.bundle.js -i --skip-source-maps', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
@@ -54,24 +54,24 @@ gulp.task('bundle-app', ['bundle-vendor'], function (cb) {
 //});
 
 gulp.task('copy-bundles', ['bundle-app'], function () {
-    return gulp.src(['app.bundle.js','vendor.bundle.js'])
+    return gulp.src(['./src/app.bundle.js','./src/vendor.bundle.js'])
         .pipe(gulp.dest('./build'));
 });
 
 gulp.task('delete-bundles', ['copy-bundles'], function () {
     return del([
-        'app.bundle.js',
-        'vendor.bundle.js'
+        './src/app.bundle.js',
+        './src/vendor.bundle.js'
     ]);
 });
 
 gulp.task('jspm', ['delete-bundles'], function () {
-    return gulp.src('jspm_packages/system.js')
+    return gulp.src('./src/jspm_packages/system.js')
         .pipe(gulp.dest('./build/jspm_packages'));
 });
 
 gulp.task('system-config', ['jspm'], function () {
-    return gulp.src('config.js')
+    return gulp.src('./src/config.js')
         .pipe(gulp.dest('./build'));
 });
 

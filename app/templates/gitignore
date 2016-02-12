@@ -1,12 +1,12 @@
 # Dependency directories
 node_modules
-app/jspm_packages
+src/jspm_packages
 
 #Editor files
 .idea
 
 # Build directory
-build
+src/build
 
 # Deploy directory
 deploy

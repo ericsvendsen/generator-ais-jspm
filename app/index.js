@@ -86,6 +86,7 @@ module.exports = generators.Base.extend({
             packageJSON.jspm.dependencies['lodash'] = 'npm:lodash@^4.2.1';
             packageJSON.jspm.dependencies['moment'] = 'npm:moment@^2.11.2';
             packageJSON.jspm.dependencies['scss'] = 'github:mobilexag/plugin-sass@^0.2.1';
+            packageJSON.jspm.dependencies['text'] = 'github:systemjs/plugin-text@^0.0.4';
 
             // jspm core dependencies
             packageJSON.jspm.devDependencies['babel'] = 'npm:babel-core@^5.8.24';

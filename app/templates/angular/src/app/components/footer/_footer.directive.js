@@ -1,7 +1,9 @@
+import footerTemplate from './footer.template.html!text';
+
 export default function FooterDirective () {
     return {
         restrict: 'E',
-        templateUrl: './app/components/footer/footer.template.html',
+        template: footerTemplate,
         controller: 'footerController',
         controllerAs: 'vm',
         scope: {}

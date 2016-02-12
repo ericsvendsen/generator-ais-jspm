@@ -1,7 +1,9 @@
+import navigationTemplate from './navigation.template.html!text';
+
 export default function NavigationDirective () {
     return {
         restrict: 'E',
-        templateUrl: './app/components/navigation/navigation.template.html',
+        template: navigationTemplate,
         controller: 'navigationController',
         controllerAs: 'vm',
         scope: {}

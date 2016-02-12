@@ -9,6 +9,10 @@ import appServices from './services/index.js';
 
 import './app.scss!';
 
+import homeTemplate from './pages/home/home.template.html!text';
+import aboutTemplate from './pages/about/about.template.html!text';
+import contactTemplate from './pages/contact/contact.template.html!text';
+
 let app = angular.module('<%=ngapp%>', [
     'ngRoute',
     'ngSanitize',
@@ -23,17 +27,17 @@ app.config(['$routeProvider', function ($routeProvider) {
             .when('/', {
                 controller: 'homeController',
                 controllerAs: 'vm',
-                templateUrl: './app/pages/home/home.template.html'
+                template: homeTemplate
             })
             .when('/about', {
                 controller: 'aboutController',
                 controllerAs: 'vm',
-                templateUrl: './app/pages/about/about.template.html'
+                template: aboutTemplate
             })
             .when('/contact', {
                 controller: 'contactController',
                 controllerAs: 'vm',
-                templateUrl: './app/pages/contact/contact.template.html'
+                template: contactTemplate
             })
             .otherwise({
                 redirectTo: '/'

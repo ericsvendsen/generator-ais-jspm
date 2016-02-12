@@ -10,14 +10,8 @@ gulp.task('clean', function () {
     ]);
 });
 
-// html
-gulp.task('html', ['clean'], function () {
-    return gulp.src('./src/**/*.html')
-        .pipe(gulp.dest('./src/build'));
-});
-
 // vendor bundle
-gulp.task('vendor', ['html'], function () {
+gulp.task('vendor', ['clean'], function () {
     return jspm({
         bundles: [
             {
@@ -70,4 +64,7 @@ gulp.task('browser-sync', ['system-config'], function () {
     gulp.watch('./src/app/**/*', ['watch']);
 });
 
-gulp.task('default', ['browser-sync']);
+gulp.task('default', ['browser-sync'], function () {
+    return gulp.src('./src/index.html')
+        .pipe(gulp.dest('./src/build'));
+});

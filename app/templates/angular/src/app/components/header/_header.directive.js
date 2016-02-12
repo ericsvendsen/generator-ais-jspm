@@ -1,7 +1,9 @@
+import headerTemplate from './header.template.html!text';
+
 export default function HeaderDirective () {
     return {
         restrict: 'E',
-        templateUrl: './app/components/header/header.template.html',
+        template: headerTemplate,
         controller: 'headerController',
         controllerAs: 'vm',
         scope: {}

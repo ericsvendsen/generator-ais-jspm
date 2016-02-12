@@ -1,10 +1,10 @@
-function initialize () {
-    // initialization
-
-}
-
 export default function HomeController () {
     let self = this;
+
+    let initialize = function () {
+        // initialization
+
+    };
 
     initialize();
 }

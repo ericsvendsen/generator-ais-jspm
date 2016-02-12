@@ -1,92 +1,73 @@
 var gulp = require('gulp'),
     del = require('del'),
     browserSync = require('browser-sync').create(),
-    exec = require('child_process').exec,
-    rename = require('gulp-rename'),
-    gulp_jspm = require('gulp-jspm');
+    jspm = require('gulp-jspm-build');
 
 // clean
 gulp.task('clean', function () {
     return del([
-        './build/**/*'
+        './src/build/**/*'
     ]);
 });
 
 // html
 gulp.task('html', ['clean'], function () {
     return gulp.src('./src/**/*.html')
-        .pipe(gulp.dest('./build'));
+        .pipe(gulp.dest('./src/build'));
 });
 
-// vendor
-gulp.task('bundle-vendor', ['html'], function (cb) {
-    return exec('jspm bundle \'app/app - [app/**/*]\' src/vendor.bundle.js -i --skip-source-maps', function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        cb(err);
-    });
-});
-//gulp.task('bundle-vendor', ['html'], function () {
-//    return gulp.src('app/app.js')
-//        .pipe(gulp_jspm({
-//            arithmetic: '- [app/**/*]',
-//            inject: true
-//        }))
-//        .pipe(rename('vendor.bundle.js'))
-//        .pipe(gulp.dest('./build'));
-//});
-
-// app
-gulp.task('bundle-app', ['bundle-vendor'], function (cb) {
-    return exec('jspm bundle \'app/app - vendor.bundle.js\' src/app.bundle.js -i --skip-source-maps', function (err, stdout, stderr) {
-        console.log(stdout);
-        console.log(stderr);
-        cb(err);
-    });
-});
-//gulp.task('bundle-app', ['bundle-vendor'], function () {
-//    return gulp.src('app/app.js')
-//        .pipe(gulp_jspm({
-//            arithmetic: '- ./build/vendor.bundle.js',
-//            inject: true
-//        }))
-//        .pipe(gulp.dest('./build'));
-//});
-
-gulp.task('copy-bundles', ['bundle-app'], function () {
-    return gulp.src(['./src/app.bundle.js','./src/vendor.bundle.js'])
-        .pipe(gulp.dest('./build'));
+// vendor bundle
+gulp.task('vendor', ['html'], function () {
+    return jspm({
+        bundles: [
+            {
+                src: 'app/app.js - [app/**/*]',
+                dst: 'vendor.bundle.js'
+            }
+        ]
+    }).pipe(gulp.dest('./src/build'));
 });
 
-gulp.task('delete-bundles', ['copy-bundles'], function () {
-    return del([
-        './src/app.bundle.js',
-        './src/vendor.bundle.js'
-    ]);
-});
+// app bundle
+var appBundle = function () {
+    return jspm({
+        bundles: [
+            {
+                src: 'app/app.js - build/vendor.bundle.js',
+                dst: 'app.bundle.js'
+            }
+        ]
+    }).pipe(gulp.dest('./src/build'));
+};
 
-gulp.task('jspm', ['delete-bundles'], function () {
+gulp.task('app', ['vendor'], appBundle);
+gulp.task('app-watch', appBundle);
+
+// system js dependencies
+gulp.task('system-src', ['app'], function () {
     return gulp.src('./src/jspm_packages/system.js')
-        .pipe(gulp.dest('./build/jspm_packages'));
+        .pipe(gulp.dest('./src/build/jspm_packages'));
 });
 
-gulp.task('system-config', ['jspm'], function () {
+gulp.task('system-config', ['system-src'], function () {
     return gulp.src('./src/config.js')
-        .pipe(gulp.dest('./build'));
+        .pipe(gulp.dest('./src/build'));
 });
 
 // watch
-gulp.task('watch', ['bundle-app'], browserSync.reload);
+gulp.task('watch', ['app-watch'], function () {
+    browserSync.reload();
+});
 
-// Static server
+// static server
 gulp.task('browser-sync', ['system-config'], function () {
     browserSync.init({
         server: {
-            baseDir: './build'
+            baseDir: './src/build'
         }
     });
 
-    gulp.watch('./app/**/*', ['watch']);
+    gulp.watch('./src/app/**/*', ['watch']);
 });
 
 gulp.task('default', ['browser-sync']);

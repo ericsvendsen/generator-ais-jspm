@@ -3,6 +3,7 @@ export default function HeaderDirective () {
         restrict: 'E',
         templateUrl: './app/components/header/header.template.html',
         controller: 'headerController',
+        controllerAs: 'vm',
         scope: {}
     };
 }

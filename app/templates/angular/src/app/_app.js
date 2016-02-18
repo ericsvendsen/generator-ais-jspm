@@ -7,6 +7,7 @@ import appPages from './pages/index.js';
 import appModels from './models/index.js';
 import appServices from './services/index.js';
 
+import 'bootstrap/css/bootstrap.css!';
 import './app.scss!';
 
 import homeTemplate from './pages/home/home.template.html!text';

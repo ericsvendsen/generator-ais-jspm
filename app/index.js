@@ -60,12 +60,12 @@ module.exports = generators.Base.extend({
             packageJSON.devDependencies['del'] = '^2.2.0';
             packageJSON.devDependencies['gulp'] = '^3.9.0';
             packageJSON.devDependencies['gulp-jshint'] = '^2.0.0';
-            packageJSON.devDependencies['gulp-jspm-build'] = '^0.0.14';
             packageJSON.devDependencies['gulp-ng-config'] = '^1.2.1';
             packageJSON.devDependencies['jasmine-core'] = '^2.4.1';
             packageJSON.devDependencies['jshint'] = '^2.9.1';
             packageJSON.devDependencies['jshint-stylish'] = '^2.1.0';
             packageJSON.devDependencies['jspm'] = '^0.16.27';
+            packageJSON.devDependencies['jspm-dev-builder'] = '^0.3.2';
             packageJSON.devDependencies['karma'] = '^0.13.19';
             packageJSON.devDependencies['karma-chrome-launcher'] = '^0.2.2';
 
@@ -81,7 +81,8 @@ module.exports = generators.Base.extend({
 
 
             // general client dependencies
-            packageJSON.jspm.dependencies['bootstrap-sass'] = 'github:twbs/bootstrap-sass@^3.3.6';
+            packageJSON.jspm.dependencies['bootstrap'] = 'github:twbs/bootstrap@^3.3.6';
+            packageJSON.jspm.dependencies['css'] = 'github:systemjs/plugin-css@^0.1.20';
             packageJSON.jspm.dependencies['font-awesome'] = 'npm:font-awesome@^4.5.0';
             packageJSON.jspm.dependencies['lodash'] = 'npm:lodash@^4.2.1';
             packageJSON.jspm.dependencies['moment'] = 'npm:moment@^2.11.2';
@@ -91,6 +92,7 @@ module.exports = generators.Base.extend({
             // jspm core dependencies
             packageJSON.jspm.devDependencies['babel'] = 'npm:babel-core@^5.8.24';
             packageJSON.jspm.devDependencies['babel-runtime'] = 'npm:babel-runtime@^5.8.24';
+            packageJSON.jspm.devDependencies['clean-css'] = 'npm:clean-css@^3.4.9';
             packageJSON.jspm.devDependencies['core-js'] = 'npm:core-js@^1.1.4';
 
             this.fs.writeJSON('package.json', packageJSON);

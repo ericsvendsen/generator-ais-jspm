@@ -146,7 +146,7 @@ gulp.task('deploy-compress', ['dist'], () => {
         .pipe(gulp.dest(`./${paths.deploy}`));
 });
 
-gulp.task('deploy', ['deploy-compress'], function () {
+gulp.task('deploy', ['deploy-compress'], () => {
     return del([
         './<%=ngapp%>'
     ]);

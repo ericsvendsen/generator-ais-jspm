@@ -1,19 +1,25 @@
+// angular
 import angular from 'angular';
 import ngRoute from 'angular-route';
 import ngSanitize from 'angular-sanitize';
 
+// app modules
 import appComponents from './components/index.js';
 import appPages from './pages/index.js';
 import appModels from './models/index.js';
 import appServices from './services/index.js';
 
-import 'bootstrap/css/bootstrap.css!';
-import './app.scss!';
-
+// app route templates
 import homeTemplate from './pages/home/home.template.html!text';
 import aboutTemplate from './pages/about/about.template.html!text';
 import contactTemplate from './pages/contact/contact.template.html!text';
 
+// app styles
+import 'bootstrap/css/bootstrap.css!';
+import 'font-awesome/css/font-awesome.css!';
+import './app.scss!';
+
+// main app module
 let app = angular.module('<%=ngapp%>', [
     'ngRoute',
     'ngSanitize',
@@ -23,6 +29,7 @@ let app = angular.module('<%=ngapp%>', [
     'appServices'
 ]);
 
+// app routing
 app.config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/', {

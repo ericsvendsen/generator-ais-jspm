@@ -4,7 +4,7 @@ const gulp = require('gulp');
 const jspm = require('jspm');
 const del = require('del');
 const browserSync = require('browser-sync').create();
-const devBuilder = require('jspm-dev-builder');
+const DevBuilder = require('jspm-dev-builder');
 
 // clean
 gulp.task('clean', () => {
@@ -13,7 +13,12 @@ gulp.task('clean', () => {
     ]);
 });
 
-// system js dependencies
+// vendor assets
+gulp.task('vendor-fonts', ['clean'], () => {
+    return gulp.src(['./src/jspm_packages/**/font-awesome*/fonts/**','./src/jspm_packages/**/twbs/bootstrap*/fonts/**'])
+        .pipe(gulp.dest('./build/jspm_packages'));
+});
+
 gulp.task('system-src', ['clean'], () => {
     return gulp.src('./src/jspm_packages/system.js')
         .pipe(gulp.dest('./build/jspm_packages'));
@@ -24,8 +29,10 @@ gulp.task('system-config', ['clean'], () => {
         .pipe(gulp.dest('./build'));
 });
 
+gulp.task('vendor-assets', ['vendor-fonts', 'system-src', 'system-config']);
+
 // app
-let appDevBuilder = new devBuilder({
+let appDevBuilder = new DevBuilder({
     jspm: require('jspm'), // so you can use your local version of jspm
     expression: 'app/app.js', // path to your app's entry point
     outLoc: 'build/app.bundle.js', // where you want the output file
@@ -33,21 +40,23 @@ let appDevBuilder = new devBuilder({
     buildOptions: {
         sfx: false, // if the build should be self executing (please see note below on Self Executing Builds)
         // below options are passed straight through to the builder
-        // the values shown are the defaults
         minify: false,
         mangle: false,
-        sourceMaps: false,
+        sourceMaps: true,
         lowResSourceMaps: false
     }
 });
 
-gulp.task('build', ['system-src', 'system-config'], () => appDevBuilder.build());
+gulp.task('build', ['vendor-assets'], () => appDevBuilder.build());
 
 // static server
 gulp.task('server', ['build'], () => {
     browserSync.init({
         server: {
-            baseDir: './build'
+            baseDir: './build',
+            routes: {
+                '/src': './src' // serving files from build, so tell sourcemaps how to get to src
+            }
         }
     });
 

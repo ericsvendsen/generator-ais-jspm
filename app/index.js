@@ -59,6 +59,7 @@ module.exports = generators.Base.extend({
             packageJSON.devDependencies['browser-sync'] = '^2.11.1';
             packageJSON.devDependencies['del'] = '^2.2.0';
             packageJSON.devDependencies['gulp'] = '^3.9.0';
+            packageJSON.devDependencies['gulp-inject'] = '^3.0.0';
             packageJSON.devDependencies['gulp-jshint'] = '^2.0.0';
             packageJSON.devDependencies['gulp-ng-config'] = '^1.2.1';
             packageJSON.devDependencies['jasmine-core'] = '^2.4.1';
@@ -103,6 +104,7 @@ module.exports = generators.Base.extend({
         },
 
         appStaticFiles: function () {
+            this.copy('angular/src/_import.js', 'src/import.js');
             this.copy('angular/src/app/_app.scss', 'src/app/app.scss');
             this.copy('angular/src/app/components/footer/_footer.template.html', 'src/app/components/footer/footer.template.html');
             this.copy('angular/src/app/components/header/_header.template.html', 'src/app/components/header/header.template.html');

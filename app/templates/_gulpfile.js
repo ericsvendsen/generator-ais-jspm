@@ -7,11 +7,15 @@ const browserSync = require('browser-sync').create();
 const DevBuilder = require('jspm-dev-builder');
 const exec = require('child_process').exec;
 const inject = require('gulp-inject');
+const p = require('./package.json');
+const tar = require('gulp-tar');
+const gzip = require('gulp-gzip');
 
 const paths = {
     build: 'build',
     dist: 'dist',
     src: 'src',
+    deploy: 'deploy',
     fonts: ['./src/jspm_packages/**/font-awesome*/fonts/**','./src/jspm_packages/**/twbs/bootstrap*/fonts/**']
 };
 
@@ -128,4 +132,22 @@ gulp.task('serve-dist', ['dist'], () => {
             baseDir: `./${paths.dist}`
         }
     });
+});
+
+
+
+
+// deploy
+gulp.task('deploy-compress', ['dist'], () => {
+    return gulp.src(`./${paths.dist}/**/*`)
+        .pipe(gulp.dest('./<%=ngapp%>')) // this will be the name of the directory inside the archive
+        .pipe(tar('<%=ngapp$>' + p.version + '.tar'))
+        .pipe(gzip())
+        .pipe(gulp.dest(`./${paths.deploy}`));
+});
+
+gulp.task('deploy', ['deploy-compress'], function () {
+    return del([
+        './<%=ngapp%>'
+    ]);
 });

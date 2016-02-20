@@ -5,6 +5,7 @@ import ngSanitize from 'angular-sanitize';
 
 // app modules
 import appComponents from './components/index.js';
+import appConfig from './app.config.js';
 import appPages from './pages/index.js';
 import appModels from './models/index.js';
 import appServices from './services/index.js';
@@ -23,6 +24,7 @@ import './app.scss!';
 let app = angular.module('<%=ngapp%>', [
     'ngRoute',
     'ngSanitize',
+    'appConfig',
     'appComponents',
     'appPages',
     'appModels',
@@ -31,26 +33,26 @@ let app = angular.module('<%=ngapp%>', [
 
 // app routing
 app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider
-            .when('/', {
-                controller: 'homeController',
-                controllerAs: 'vm',
-                template: homeTemplate
-            })
-            .when('/about', {
-                controller: 'aboutController',
-                controllerAs: 'vm',
-                template: aboutTemplate
-            })
-            .when('/contact', {
-                controller: 'contactController',
-                controllerAs: 'vm',
-                template: contactTemplate
-            })
-            .otherwise({
-                redirectTo: '/'
-            });
-    }])
-    .value('moment', window.moment)
-    .value('_', window._)
-    .value('$', window.$);
+    $routeProvider
+        .when('/', {
+            controller: 'homeController',
+            controllerAs: 'vm',
+            template: homeTemplate
+        })
+        .when('/about', {
+            controller: 'aboutController',
+            controllerAs: 'vm',
+            template: aboutTemplate
+        })
+        .when('/contact', {
+            controller: 'contactController',
+            controllerAs: 'vm',
+            template: contactTemplate
+        })
+        .otherwise({
+            redirectTo: '/'
+        });
+}])
+.value('moment', window.moment)
+.value('_', window._)
+.value('$', window.$);

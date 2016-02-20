@@ -7,7 +7,6 @@ export default function FooterController () {
 
     let initialize = function () {
         // initialization
-
     };
 
     initialize();

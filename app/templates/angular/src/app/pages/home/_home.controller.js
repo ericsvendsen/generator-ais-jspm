@@ -1,10 +1,5 @@
 export default function HomeController () {
     let self = this;
 
-    let initialize = function () {
-        // initialization
-
-    };
-
-    initialize();
+    self.message = 'Welcome to the app.';
 }

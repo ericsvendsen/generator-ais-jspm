@@ -10,6 +10,7 @@ const inject = require('gulp-inject');
 const p = require('./package.json');
 const tar = require('gulp-tar');
 const gzip = require('gulp-gzip');
+const eslint = require('gulp-eslint');
 
 const paths = {
     build: 'build',
@@ -32,18 +33,26 @@ gulp.task('clean-dist', () => {
     ]);
 });
 
+// code linting
+gulp.task('lint', ['clean-build'], () => {
+    return gulp.src([`./${paths.src}/app/**/*.js`,`!./${paths.src}/app/app.js`])
+        .pipe(eslint())
+        .pipe(eslint.format())
+        .pipe(eslint.failAfterError());
+});
+
 // vendor assets
-gulp.task('vendor-fonts-build', ['clean-build'], () => {
+gulp.task('vendor-fonts-build', ['lint'], () => {
     return gulp.src(paths.fonts)
         .pipe(gulp.dest(`./${paths.build}/jspm_packages`));
 });
 
-gulp.task('system-src', ['clean-build'], () => {
+gulp.task('system-src', ['lint'], () => {
     return gulp.src(`./${paths.src}/jspm_packages/system.js`)
         .pipe(gulp.dest(`./${paths.build}/jspm_packages`));
 });
 
-gulp.task('system-config', ['clean-build'], () => {
+gulp.task('system-config', ['lint'], () => {
     return gulp.src([`./${paths.src}/config.js`,`./${paths.src}/import.js`])
         .pipe(gulp.dest(`./${paths.build}`));
 });
@@ -141,7 +150,7 @@ gulp.task('serve-dist', ['dist'], () => {
 gulp.task('deploy-compress', ['dist'], () => {
     return gulp.src(`./${paths.dist}/**/*`)
         .pipe(gulp.dest('./<%=ngapp%>')) // this will be the name of the directory inside the archive
-        .pipe(tar('<%=ngapp$>' + p.version + '.tar'))
+        .pipe(tar('<%=ngapp%>' + p.version + '.tar'))
         .pipe(gzip())
         .pipe(gulp.dest(`./${paths.deploy}`));
 });

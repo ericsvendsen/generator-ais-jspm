@@ -1,11 +1,13 @@
-(function () {
-    'use strict';
+import angular from 'angular';
 
-    angular.module('<%=ngapp%>').service('appConfig', appConfig);
-
-    function appConfig () {
-        return {
-
-        };
+class AppConfig {
+    constructor () {
+        this.name = '<%=ngapp%>';
     }
-})();
+}
+
+angular.module('<%=ngapp%>.config', []).service('appConfig', [AppConfig]);
+
+angular.module('appConfig', [
+    '<%=ngapp%>.config'
+]);

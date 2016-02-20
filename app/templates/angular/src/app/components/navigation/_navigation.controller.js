@@ -5,7 +5,6 @@ export default function NavigationController () {
 
     let initialize = function () {
         // initialization
-
     };
 
     initialize();

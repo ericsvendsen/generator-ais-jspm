@@ -14,7 +14,7 @@ export default class Person {
     }
 
     static transformer (data) {
-        if (angular.isArray(data)) {
+        if (data.isArray()) {
             return data.map(Person.build);
         }
         return Person.build(data);

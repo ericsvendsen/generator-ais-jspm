@@ -22,8 +22,14 @@ module.exports = generators.Base.extend({
 
     writing: {
         gulpfile: function () {
-            this.copy('_gulpfile.js', 'gulpfile.js');
-            this.copy('jshintrc', '.jshintrc');
+            this.fs.copyTpl(
+                this.templatePath('_gulpfile.js'),
+                this.destinationPath('gulpfile.js'),
+                {
+                    ngapp: 'myApp'
+                }
+            );
+            this.copy('eslintrc.json', '.eslintrc.json');
         },
 
         packageJSON: function () {
@@ -59,14 +65,12 @@ module.exports = generators.Base.extend({
             packageJSON.devDependencies['browser-sync'] = '^2.11.1';
             packageJSON.devDependencies['del'] = '^2.2.0';
             packageJSON.devDependencies['gulp'] = '^3.9.0';
+            packageJSON.devDependencies['gulp-eslint'] = '^2.0.0';
             packageJSON.devDependencies['gulp-gzip'] = '^1.2.0';
             packageJSON.devDependencies['gulp-inject'] = '^3.0.0';
-            packageJSON.devDependencies['gulp-jshint'] = '^2.0.0';
             packageJSON.devDependencies['gulp-ng-config'] = '^1.2.1';
             packageJSON.devDependencies['gulp-tar'] = '^1.8.0';
             packageJSON.devDependencies['jasmine-core'] = '^2.4.1';
-            packageJSON.devDependencies['jshint'] = '^2.9.1';
-            packageJSON.devDependencies['jshint-stylish'] = '^2.1.0';
             packageJSON.devDependencies['jspm'] = '^0.16.27';
             packageJSON.devDependencies['jspm-dev-builder'] = '^0.3.2';
             packageJSON.devDependencies['karma'] = '^0.13.19';

@@ -8,5 +8,5 @@ Generates a project using JSPM for dependency management and System.js for modul
 * npm install -g generator-ais-jspm
 * mkdir myApp
 * cd myApp
-* yo ais-jspm
+* yo ais-jspm <myAppName>
 * gulp

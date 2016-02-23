@@ -8,42 +8,6 @@ var _ = require('lodash');
 module.exports = generators.Base.extend({
     constructor: function () {
         generators.Base.apply(this, arguments);
-
-        this.option('useAngular', {
-            desc: 'Use Angular as the application framework',
-            type: Boolean,
-            default: true
-        });
-
-        this.option('useAurelia', {
-            desc: 'Use Aurelia as the application framework',
-            type: Boolean,
-            default: false
-        });
-
-        this.option('includeBootstrap', {
-            desc: 'Use Bootstrap for application layout',
-            type: Boolean,
-            default: true
-        });
-
-        this.option('includeFontawesome', {
-            desc: 'Use Font Awesome for application icons',
-            type: Boolean,
-            default: true
-        });
-
-        this.option('includeLodash', {
-            desc: 'Include Lodash Javascript manipulation',
-            type: Boolean,
-            default: true
-        });
-
-        this.option('includeMoment', {
-            desc: 'Use Moment Javascript datetime management',
-            type: Boolean,
-            default: true
-        });
     },
 
     initializing: function () {
@@ -55,13 +19,64 @@ module.exports = generators.Base.extend({
         this.argument('appName', { type: String, required: true });
 
         var done = this.async();
-        this.prompt({
-            type: 'input',
-            name: 'appId',
-            message: 'App ID (if Angular, this will be used for ng-app)',
-            default: 'app'
-        }, function (answers) {
-            this.appId = answers.appId;
+
+        this.prompt([
+            {
+                type: 'input',
+                name: 'appId',
+                message: 'App ID (if Angular, this will be used for ng-app)',
+                default: 'app'
+            },
+            {
+                type: 'list',
+                name: 'appFramework',
+                message: 'Which app framework would you like to use?',
+                choices: [
+                    {
+                        name: 'Angular',
+                        value: 'angular'
+                    },
+                    {
+                        name: 'Aurelia',
+                        value: 'aurelia'
+                    }
+                ],
+                default: 'angular'
+            },
+            {
+                type: 'checkbox',
+                name: 'appDependencies',
+                message: 'What dependencies would you like to install?',
+                choices: [
+                    {
+                        name: 'Bootstrap',
+                        value: 'bootstrap',
+                        checked: true
+                    },
+                    {
+                        name: 'Font Awesome',
+                        value: 'fontawesome',
+                        checked: true
+                    },
+                    {
+                        name: 'Lodash',
+                        value: 'lodash',
+                        checked: true
+                    },
+                    {
+                        name: 'Moment.JS',
+                        value: 'momentjs',
+                        checked: true
+                    }
+                ]
+            }
+        ], function (answers) {
+            this.appId = _.toLower(answers.appId);
+            this.appFramework = answers.appFramework;
+            this.includeBootstrap = _.includes(answers.appDependencies, 'bootstrap');
+            this.includeFontawesome = _.includes(answers.appDependencies, 'fontawesome');
+            this.includeLodash = _.includes(answers.appDependencies, 'lodash');
+            this.includeMoment = _.includes(answers.appDependencies, 'momentjs');
             done();
         }.bind(this));
     },
@@ -127,12 +142,12 @@ module.exports = generators.Base.extend({
             packageJSON.devDependencies['karma-chrome-launcher'] = '^0.2.2';
 
             // application framework
-            if (this.options.useAngular) {
+            if (this.appFramework === 'angular') {
                 // angular
                 packageJSON.jspm.dependencies['angular'] = 'github:angular/bower-angular@^1.5.0';
                 packageJSON.jspm.dependencies['angular-route'] = 'github:angular/bower-angular-route@^1.5.0';
                 packageJSON.jspm.dependencies['angular-sanitize'] = 'github:angular/bower-angular-sanitize@^1.5.0';
-            } else if (this.options.useAurelia) {
+            } else if (this.appFramework === 'aurelia') {
                 // aurelia
                 packageJSON.jspm.dependencies['aurelia-bootstrapper'] = 'npm:aurelia-bootstrapper@^1.0.0-beta.1.1.1';
                 packageJSON.jspm.dependencies['aurelia-framework'] = 'npm:aurelia-framework@^1.0.0-beta.1.1.1';
@@ -140,19 +155,19 @@ module.exports = generators.Base.extend({
             }
 
             // general client dependencies
-            if (this.options.includeBootstrap) {
+            if (this.includeBootstrap) {
                 packageJSON.jspm.dependencies['bootstrap'] = 'github:twbs/bootstrap@^3.3.6';
             }
 
-            if (this.options.includeFontawesome) {
+            if (this.includeFontawesome) {
                 packageJSON.jspm.dependencies['font-awesome'] = 'npm:font-awesome@^4.5.0';
             }
 
-            if (this.options.includeLodash) {
+            if (this.includeLodash) {
                 packageJSON.jspm.dependencies['lodash'] = 'npm:lodash@^4.2.1';
             }
 
-            if (this.options.includeMoment) {
+            if (this.includeMoment) {
                 packageJSON.jspm.dependencies['moment'] = 'npm:moment@^2.11.2';
             }
 
@@ -257,10 +272,12 @@ module.exports = generators.Base.extend({
     },
 
     install: function () {
-
+        this.log('\n\nI\'m all done. Running ' + chalk.yellow('npm install & jspm install') + ' for you to install the required dependencies. If this fails, try running the command yourself.');
+        this.spawnCommandSync('npm', ['install']);
+        this.spawnCommandSync('jspm', ['install','-y']);
     },
 
     end: function () {
-
+        this.log('\n' + chalk.yellow.bold('Installation Successful!'));
     }
 });

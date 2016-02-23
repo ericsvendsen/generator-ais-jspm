@@ -105,7 +105,12 @@ gulp.task('serve-dev', ['build'], () => {
 // default task
 gulp.task('default', ['serve-dev'], () => {
     return gulp.src(`./${paths.src}/index.html`)
-        .pipe(inject(gulp.src([`./${paths.build}/jspm_packages/system.js`,`./${paths.build}/config.js`,`./${paths.build}/app.bundle.js`,`./${paths.build}/import.js`], { read: false }), { starttag: '<!-- inject:dev -->', ignorePath: paths.build, addRootSlash: false }))
+        .pipe(inject(gulp.src([
+            `./${paths.build}/jspm_packages/system.js`,
+            `./${paths.build}/config.js`,
+            `./${paths.build}/app.bundle.js`,
+            `./${paths.build}/import.js`
+        ], { read: false }), { starttag: '<!-- inject:dev -->', ignorePath: paths.build, addRootSlash: false }))
         .pipe(gulp.dest(`./${paths.build}`));
 });
 

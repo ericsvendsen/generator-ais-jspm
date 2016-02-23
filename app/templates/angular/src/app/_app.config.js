@@ -2,12 +2,12 @@ import angular from 'angular';
 
 class AppConfig {
     constructor () {
-        this.name = '<%=ngapp%>';
+        this.name = '<%=appId%>';
     }
 }
 
-angular.module('<%=ngapp%>.config', []).service('appConfig', [AppConfig]);
+angular.module('<%=appId%>.config', []).service('appConfig', [AppConfig]);
 
 angular.module('appConfig', [
-    '<%=ngapp%>.config'
+    '<%=appId%>.config'
 ]);

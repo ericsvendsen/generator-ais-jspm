@@ -149,14 +149,14 @@ gulp.task('serve-dist', ['dist'], () => {
 // deploy
 gulp.task('deploy-compress', ['dist'], () => {
     return gulp.src(`./${paths.dist}/**/*`)
-        .pipe(gulp.dest('./<%=ngapp%>')) // this will be the name of the directory inside the archive
-        .pipe(tar('<%=ngapp%>' + p.version + '.tar'))
+        .pipe(gulp.dest('./<%=appId%>')) // this will be the name of the directory inside the archive
+        .pipe(tar('<%=appId%>' + p.version + '.tar'))
         .pipe(gzip())
         .pipe(gulp.dest(`./${paths.deploy}`));
 });
 
 gulp.task('deploy', ['deploy-compress'], () => {
     return del([
-        './<%=ngapp%>'
+        './<%=appId%>'
     ]);
 });

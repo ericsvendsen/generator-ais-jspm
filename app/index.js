@@ -1,11 +1,49 @@
 'use strict';
 
 var generators = require('yeoman-generator');
+var yosay = require('yosay');
+var chalk = require('chalk');
+var _ = require('lodash');
 
 module.exports = generators.Base.extend({
     constructor: function () {
         generators.Base.apply(this, arguments);
 
+        this.option('useAngular', {
+            desc: 'Use Angular as the application framework',
+            type: Boolean,
+            default: true
+        });
+
+        this.option('useAurelia', {
+            desc: 'Use Aurelia as the application framework',
+            type: Boolean,
+            default: false
+        });
+
+        this.option('includeBootstrap', {
+            desc: 'Use Bootstrap for application layout',
+            type: Boolean,
+            default: true
+        });
+
+        this.option('includeFontawesome', {
+            desc: 'Use Font Awesome for application icons',
+            type: Boolean,
+            default: true
+        });
+
+        this.option('includeLodash', {
+            desc: 'Include Lodash Javascript manipulation',
+            type: Boolean,
+            default: true
+        });
+
+        this.option('includeMoment', {
+            desc: 'Use Moment Javascript datetime management',
+            type: Boolean,
+            default: true
+        });
     },
 
     initializing: function () {
@@ -13,7 +51,19 @@ module.exports = generators.Base.extend({
     },
 
     prompting: function () {
+        this.log(yosay('Welcome to the ' + chalk.yellow('Applied Information Sciences JSPM') + ' Generator'));
+        this.argument('appName', { type: String, required: true });
 
+        var done = this.async();
+        this.prompt({
+            type: 'input',
+            name: 'appId',
+            message: 'App ID (if Angular, this will be used for ng-app)',
+            default: 'app'
+        }, function (answers) {
+            this.appId = answers.appId;
+            done();
+        }.bind(this));
     },
 
     configuring: function () {
@@ -26,7 +76,7 @@ module.exports = generators.Base.extend({
                 this.templatePath('_gulpfile.js'),
                 this.destinationPath('gulpfile.js'),
                 {
-                    ngapp: 'myApp'
+                    appId: this.appId
                 }
             );
             this.copy('eslintrc.json', '.eslintrc.json');
@@ -34,14 +84,14 @@ module.exports = generators.Base.extend({
 
         packageJSON: function () {
             var packageJSON = {
-                name: 'myapp',
+                name: _.camelCase(this.appName),
                 version: '0.1.0',
-                description: 'my app description',
+                description: this.appDescription,
                 main: 'app.js',
                 scripts: {
                     test: 'echo \'Error: no test specified\' && exit 1'
                 },
-                author: 'me',
+                author: this.appAuthor,
                 license: 'MIT',
                 dependencies: {},
                 devDependencies: {},
@@ -76,23 +126,37 @@ module.exports = generators.Base.extend({
             packageJSON.devDependencies['karma'] = '^0.13.19';
             packageJSON.devDependencies['karma-chrome-launcher'] = '^0.2.2';
 
-            // angular
-            packageJSON.jspm.dependencies['angular'] = 'github:angular/bower-angular@^1.5.0';
-            packageJSON.jspm.dependencies['angular-route'] = 'github:angular/bower-angular-route@^1.5.0';
-            packageJSON.jspm.dependencies['angular-sanitize'] = 'github:angular/bower-angular-sanitize@^1.5.0';
-
-            // aurelia
-            //packageJSON.jspm.dependencies['aurelia-bootstrapper'] = 'npm:aurelia-bootstrapper@^1.0.0-beta.1.1.1';
-            //packageJSON.jspm.dependencies['aurelia-framework'] = 'npm:aurelia-framework@^1.0.0-beta.1.1.1';
-            //packageJSON.jspm.dependencies['aurelia-http-client'] = 'npm:aurelia-http-client@^1.0.0-beta.1.1.0';
-
+            // application framework
+            if (this.options.useAngular) {
+                // angular
+                packageJSON.jspm.dependencies['angular'] = 'github:angular/bower-angular@^1.5.0';
+                packageJSON.jspm.dependencies['angular-route'] = 'github:angular/bower-angular-route@^1.5.0';
+                packageJSON.jspm.dependencies['angular-sanitize'] = 'github:angular/bower-angular-sanitize@^1.5.0';
+            } else if (this.options.useAurelia) {
+                // aurelia
+                packageJSON.jspm.dependencies['aurelia-bootstrapper'] = 'npm:aurelia-bootstrapper@^1.0.0-beta.1.1.1';
+                packageJSON.jspm.dependencies['aurelia-framework'] = 'npm:aurelia-framework@^1.0.0-beta.1.1.1';
+                packageJSON.jspm.dependencies['aurelia-http-client'] = 'npm:aurelia-http-client@^1.0.0-beta.1.1.0';
+            }
 
             // general client dependencies
-            packageJSON.jspm.dependencies['bootstrap'] = 'github:twbs/bootstrap@^3.3.6';
+            if (this.options.includeBootstrap) {
+                packageJSON.jspm.dependencies['bootstrap'] = 'github:twbs/bootstrap@^3.3.6';
+            }
+
+            if (this.options.includeFontawesome) {
+                packageJSON.jspm.dependencies['font-awesome'] = 'npm:font-awesome@^4.5.0';
+            }
+
+            if (this.options.includeLodash) {
+                packageJSON.jspm.dependencies['lodash'] = 'npm:lodash@^4.2.1';
+            }
+
+            if (this.options.includeMoment) {
+                packageJSON.jspm.dependencies['moment'] = 'npm:moment@^2.11.2';
+            }
+
             packageJSON.jspm.dependencies['css'] = 'github:systemjs/plugin-css@^0.1.20';
-            packageJSON.jspm.dependencies['font-awesome'] = 'npm:font-awesome@^4.5.0';
-            packageJSON.jspm.dependencies['lodash'] = 'npm:lodash@^4.2.1';
-            packageJSON.jspm.dependencies['moment'] = 'npm:moment@^2.11.2';
             packageJSON.jspm.dependencies['scss'] = 'github:mobilexag/plugin-sass@^0.2.1';
             packageJSON.jspm.dependencies['text'] = 'github:systemjs/plugin-text@^0.0.4';
 
@@ -136,42 +200,42 @@ module.exports = generators.Base.extend({
                 this.templatePath('angular/src/app/_app.js'),
                 this.destinationPath('src/app/app.js'),
                 {
-                    ngapp: 'myApp'
+                    appId: this.appId
                 }
             );
             this.fs.copyTpl(
                 this.templatePath('angular/src/app/_app.config.js'),
                 this.destinationPath('src/app/app.config.js'),
                 {
-                    ngapp: 'myApp'
+                    appId: this.appId
                 }
             );
             this.fs.copyTpl(
                 this.templatePath('angular/src/app/components/_index.js'),
                 this.destinationPath('src/app/components/index.js'),
                 {
-                    ngapp: 'myApp'
+                    appId: this.appId
                 }
             );
             this.fs.copyTpl(
                 this.templatePath('angular/src/app/pages/_index.js'),
                 this.destinationPath('src/app/pages/index.js'),
                 {
-                    ngapp: 'myApp'
+                    appId: this.appId
                 }
             );
             this.fs.copyTpl(
                 this.templatePath('angular/src/app/models/_index.js'),
                 this.destinationPath('src/app/models/index.js'),
                 {
-                    ngapp: 'myApp'
+                    appId: this.appId
                 }
             );
             this.fs.copyTpl(
                 this.templatePath('angular/src/app/services/_index.js'),
                 this.destinationPath('src/app/services/index.js'),
                 {
-                    ngapp: 'myApp'
+                    appId: this.appId
                 }
             );
         },
@@ -181,8 +245,8 @@ module.exports = generators.Base.extend({
                 this.templatePath('angular/src/_index.html'),
                 this.destinationPath('src/index.html'),
                 {
-                    appname: 'My App',
-                    ngapp: 'myApp'
+                    appName: this.appName,
+                    appId: this.appId
                 }
             );
         }

@@ -4,12 +4,12 @@ import AboutController from './about/about.controller.js';
 import ContactController from './contact/contact.controller.js';
 import HomeController from './home/home.controller.js';
 
-angular.module('<%=ngapp%>.pages.aboutController', []).controller('aboutController', [AboutController]);
-angular.module('<%=ngapp%>.pages.contactController', []).controller('contactController', [ContactController]);
-angular.module('<%=ngapp%>.pages.homeController', []).controller('homeController', [HomeController]);
+angular.module('<%=appId%>.pages.aboutController', []).controller('aboutController', [AboutController]);
+angular.module('<%=appId%>.pages.contactController', []).controller('contactController', [ContactController]);
+angular.module('<%=appId%>.pages.homeController', []).controller('homeController', [HomeController]);
 
 angular.module('appPages', [
-    '<%=ngapp%>.pages.aboutController',
-    '<%=ngapp%>.pages.contactController',
-    '<%=ngapp%>.pages.homeController'
+    '<%=appId%>.pages.aboutController',
+    '<%=appId%>.pages.contactController',
+    '<%=appId%>.pages.homeController'
 ]);

@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/ericsvendsen/generator-ais-jspm#readme",
   "dependencies": {
-    "yeoman-generator": "^0.22.5"
+    "chalk": "^1.1.1",
+    "lodash": "^4.5.1",
+    "yeoman-generator": "^0.22.5",
+    "yosay": "^1.1.0"
   }
 }

@@ -21,7 +21,7 @@ import 'font-awesome/css/font-awesome.css!';
 import './app.scss!';
 
 // main app module
-let app = angular.module('<%=ngapp%>', [
+let app = angular.module('<%=appId%>', [
     'ngRoute',
     'ngSanitize',
     'appConfig',
